@@ -5,60 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محطة الطقس الرقمية</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a; /* خلفية داكنة مريحة للعين */
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* إلغاء أي هوامش في الصفحة */
+        html, body {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #ffffff;
         }
-        .card {
-            background-color: #2a2a2a;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            width: 300px;
+        /* عرض القناة العامة بالكامل لتملأ شاشة أصدقائك */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
-        h1 { font-size: 24px; margin-bottom: 20px; color: #4CAF50; }
-        .temp-value { font-size: 64px; font-weight: bold; margin: 10px 0; }
-        .unit { font-size: 32px; color: #aaa; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>درجة الحرارة الحالية</h1>
-        <!-- الكود سيجلب الرقم الحقيقي من قناتك ويعرضه هنا مباشرة وبشكل رقمي كبير -->
-        <div class="temp-value"><span id="temp">--</span><span class="unit">°C</span></div>
-    </div>
+    <!-- تضمين قناتك العامة رقم 3449987 الحية مباشرة -->
+    <iframe src="https://thingspeak.com"></iframe>
 
-    <script>
-        // رابط جلب البيانات الخاص بقناتك العامة مباشرة
-        const url = "https://thingspeak.com"; 
-        
-        async function getTemperature() {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                // التأكد من وجود بيانات في الحقل الأول وعرضها
-                if(data.field1 !== null && data.field1 !== undefined) {
-                    document.getElementById('temp').innerText = parseFloat(data.field1).toFixed(1);
-                } else {
-                    document.getElementById('temp').innerText = "0.0";
-                }
-            } catch (error) {
-                console.error("خطأ في الاتصال بالبيانات:", error);
-            }
-        }
-
-        // جلب البيانات فور فتح الصفحة وتحديثها تلقائياً كل 15 ثانية
-        getTemperature();
-        setInterval(getTemperature, 15000);
-    </script>
 </body>
 </html>
